@@ -1,6 +1,8 @@
 package com.example.android.bakingapp.Activities;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RecipesActivity extends AppCompatActivity {
+public class RecipesActivity extends AppCompatActivity implements RecipesAdapter.RecipeOnClickHandler {
 
     private RecyclerView mRvRecipeCards;
     private RecyclerView.Adapter mAdapter;
@@ -45,6 +47,23 @@ public class RecipesActivity extends AppCompatActivity {
 
 
 
+
+    }
+
+    @Override
+    public void onClick(Recipe requestedRecipe){
+        Context context = this;
+
+        Intent startRecipeActivityIntent = new Intent(context, RecipeActivity.class);
+        startRecipeActivityIntent.putExtra("requested", requestedRecipe);
+        startActivity(startRecipeActivityIntent);
+    }
+
+
+
+    private void generateRecipesList(List<Recipe> recipes){
+        mAdapter = new RecipesAdapter(this, recipes, this );
+        mRvRecipeCards.setAdapter(mAdapter);
 
     }
 
@@ -79,12 +98,5 @@ public class RecipesActivity extends AppCompatActivity {
         }
 
     }
-
-    private void generateRecipesList(List<Recipe> recipes){
-        mAdapter = new RecipesAdapter(this, recipes);
-        mRvRecipeCards.setAdapter(mAdapter);
-
-    }
-
 
 }

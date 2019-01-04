@@ -16,17 +16,33 @@ import java.util.List;
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder> {
     private List<Recipe> recipes;
     private LayoutInflater mInflater;
+    private final RecipeOnClickHandler mClickHandler;
 
-    public RecipesAdapter(Context context, List<Recipe> recipesList){
+    public interface RecipeOnClickHandler {
+        void onClick(Recipe requestedRecipe);
+    }
+
+    public RecipesAdapter(Context context, List<Recipe> recipesList, RecipeOnClickHandler clickHandler){
         mInflater = LayoutInflater.from(context);
         this.recipes = recipesList;
+        mClickHandler = clickHandler;
     }
 
-    public static class RecipesViewHolder extends RecyclerView.ViewHolder{
+    public class RecipesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public RecipesViewHolder(View view){
             super(view);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int adapterPosition = getAdapterPosition();
+            Recipe requestedRecipe = recipes.get(adapterPosition);
+            mClickHandler.onClick(requestedRecipe);
         }
     }
+
+
 
     @NonNull
     @Override
