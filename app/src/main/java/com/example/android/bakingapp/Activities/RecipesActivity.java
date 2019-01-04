@@ -57,7 +57,9 @@ public class RecipesActivity extends AppCompatActivity {
 
                 @Override
                 public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                    viewModel.setRecipes(response.body());
+                    List<Recipe> recipes = response.body();
+                    viewModel.setRecipes(recipes);
+                    generateRecipesList(recipes);
                     Log.e("Retrofit Response", "" + response.body());
 
                 }
@@ -72,4 +74,10 @@ public class RecipesActivity extends AppCompatActivity {
         }
 
     }
+
+    private void generateRecipesList(List<Recipe> recipes){
+
+    }
+
+
 }
