@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.android.bakingapp.Adapters.RecipesAdapter;
 import com.example.android.bakingapp.Models.Recipe;
 import com.example.android.bakingapp.Models.RecipeViewModel;
 import com.example.android.bakingapp.Network.RetrofitClientInstance;
@@ -72,10 +73,16 @@ public class RecipesActivity extends AppCompatActivity {
                 }
             });
         }
+        else{
+            List<Recipe> recipes = viewModel.getRecipes();
+            generateRecipesList(recipes);
+        }
 
     }
 
     private void generateRecipesList(List<Recipe> recipes){
+        mAdapter = new RecipesAdapter(this, recipes);
+        mRvRecipeCards.setAdapter(mAdapter);
 
     }
 
