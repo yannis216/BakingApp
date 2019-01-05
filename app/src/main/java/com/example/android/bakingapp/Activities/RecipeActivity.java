@@ -26,7 +26,10 @@ public class RecipeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Recipe recipe = (Recipe) intent.getSerializableExtra("requested");
         viewModel.setRecipe(recipe);
-        
+
+
+
+
 
 
     }
