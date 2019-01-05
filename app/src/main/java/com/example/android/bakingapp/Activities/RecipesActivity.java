@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.android.bakingapp.Adapters.RecipesAdapter;
 import com.example.android.bakingapp.Models.Recipe;
-import com.example.android.bakingapp.Models.RecipeViewModel;
+import com.example.android.bakingapp.Models.RecipesViewModel;
 import com.example.android.bakingapp.Network.RetrofitClientInstance;
 import com.example.android.bakingapp.R;
 
@@ -27,7 +27,7 @@ public class RecipesActivity extends AppCompatActivity implements RecipesAdapter
     private RecyclerView mRvRecipeCards;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecipeViewModel viewModel;
+    private RecipesViewModel viewModel;
 
 
     @Override
@@ -40,7 +40,7 @@ public class RecipesActivity extends AppCompatActivity implements RecipesAdapter
         mLayoutManager = new LinearLayoutManager(this);
         mRvRecipeCards.setLayoutManager(mLayoutManager);
 
-        viewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(RecipesViewModel.class);
 
         getRecipesFromNetworkResource();
 

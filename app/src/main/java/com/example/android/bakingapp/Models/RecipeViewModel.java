@@ -2,20 +2,18 @@ package com.example.android.bakingapp.Models;
 
 import android.arch.lifecycle.ViewModel;
 
-import java.util.List;
-
 
 public class RecipeViewModel extends ViewModel {
-    public List<Recipe> recipes;
+    public Recipe recipe;
 
 
 
-    public List<Recipe> getRecipes() {
-        return recipes;
+    public Recipe getRecipe() {
+        return recipe;
     }
 
-    public void setRecipes(List<Recipe> newRecipes){
-        recipes = newRecipes;
+    public void setRecipe(Recipe newRecipe){
+        recipe = newRecipe;
 
     }
 
