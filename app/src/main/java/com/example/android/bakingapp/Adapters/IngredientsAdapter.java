@@ -3,7 +3,6 @@ package com.example.android.bakingapp.Adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,17 +20,13 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     public IngredientsAdapter(Context context, List<Ingredient> ingredientList){
         mInflater = LayoutInflater.from(context);
         this.ingredients = ingredientList;
-        Log.e("AdapterConstructor", "DOES GET CALLED");
     }
 
     public class IngredientsViewHolder extends RecyclerView.ViewHolder {
         public IngredientsViewHolder(View view){
             super(view);
-            Log.e("IngredientsViewHolder", "DOES GET CALLED");
         }
     }
-
-
 
     @NonNull
     @Override
@@ -40,7 +35,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         int layoutIdForListItem = R.layout.activity_recipe_ingredient_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean attachImmediately = false;
-        Log.e("onCreateViewHolder", "DOES GET CALLED");
 
         View view = inflater.inflate(layoutIdForListItem, viewGroup, attachImmediately);
 
@@ -49,23 +43,24 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull IngredientsViewHolder holder, int position) {
-        Log.e("onBindViewHolder", "DOES GET CALLED");
         Ingredient currentIngredient = ingredients.get(position);
-        String ingredientName = currentIngredient.getIngredient();
-        Log.e("Current Ingredient", "" + ingredientName);
+        currentIngredient.getIngredient();
 
-        TextView nameView = holder.itemView.findViewById(R.id.tv_ingredients_ingredient);
+        TextView ingredientView = holder.itemView.findViewById(R.id.tv_ingredients_ingredient);
+        TextView quantityView = holder.itemView.findViewById(R.id.tv_ingredients_quantity);
+        TextView measureView = holder.itemView.findViewById(R.id.tv_ingredients_measure);
 
-        nameView.setText(ingredientName);
+
+        quantityView.setText("" + currentIngredient.getQuantity());
+        measureView.setText("" + currentIngredient.getMeasure() + " ");
+        ingredientView.setText(currentIngredient.getIngredient());
+
 
 
     }
 
     public int getItemCount(){
-        Log.e("ItemCount", "" + ingredients.size());
         return ingredients.size();
     }
-
-
 
 }
