@@ -88,7 +88,8 @@ public class RecipeActivity extends AppCompatActivity implements StepsAdapter.St
         Context context = this;
 
         Intent startRecipesActivityIntent = new Intent(context, RecipesActivity.class);
-        startRecipesActivityIntent.putExtra("requested", requestedStep);
+        startRecipesActivityIntent.putExtra("Recipe", recipe);
+        startRecipesActivityIntent.putExtra("selectedStep", requestedStep.getId());
         startActivity(startRecipesActivityIntent);
     }
 }

@@ -7,8 +7,7 @@ import java.util.List;
 
 public class RecipesViewModel extends ViewModel {
     public List<Recipe> recipes;
-
-
+    
 
     public List<Recipe> getRecipes() {
         return recipes;
@@ -16,7 +15,6 @@ public class RecipesViewModel extends ViewModel {
 
     public void setRecipes(List<Recipe> newRecipes){
         recipes = newRecipes;
-
     }
 
     }
