@@ -7,7 +7,7 @@ import java.util.List;
 
 public class RecipesViewModel extends ViewModel {
     public List<Recipe> recipes;
-    
+
 
     public List<Recipe> getRecipes() {
         return recipes;
