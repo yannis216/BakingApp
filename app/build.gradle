@@ -16,6 +16,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -43,3 +46,5 @@ dependencies {
 
     implementation 'com.google.android.exoplayer:exoplayer:2.9.3'
 }
+
+
