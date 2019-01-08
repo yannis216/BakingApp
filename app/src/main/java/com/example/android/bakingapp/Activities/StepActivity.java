@@ -25,7 +25,7 @@ import java.util.List;
 
 public class StepActivity extends AppCompatActivity {
 
-    private Integer currentStepId;
+    private Integer givenStepId;
     private Recipe recipe;
     private StepViewModel viewModel;
     private PlayerView playerView;
@@ -46,17 +46,18 @@ public class StepActivity extends AppCompatActivity {
         if(viewModel.getRecipe() == null || viewModel.getCurrentStepId() ==null) {
             Intent intent = getIntent();
             recipe = (Recipe) intent.getSerializableExtra("Recipe");
-            currentStepId = intent.getIntExtra("selectedStep", 0);
+            givenStepId = intent.getIntExtra("selectedStep", 0);
             viewModel.setRecipe(recipe);
         }
         else{
             recipe = viewModel.getRecipe();
-            currentStepId = viewModel.getCurrentStepId();
+            givenStepId = viewModel.getCurrentStepId();
         }
 
         List<Step> steps = recipe.getSteps();
-        Step currentStep = steps.get(currentStepId);
-        String url = currentStep.getVideoURL();
+        Step requestedStep = findStepById(steps, givenStepId);
+
+        String url = requestedStep.getVideoURL();
 
         if (url != ""){
             setupExoPlayer(url);
@@ -68,8 +69,17 @@ public class StepActivity extends AppCompatActivity {
 
 
 
-        tvStepLongDesc.setText(currentStep.getDescription());
+        tvStepLongDesc.setText(requestedStep.getDescription());
 
+    }
+
+    private Step findStepById(List<Step> steps, int stepId){
+        for(Step step : steps){
+            if(step.getId() == stepId){
+                return step;
+            }
+        }
+        return null;        
     }
 
 
