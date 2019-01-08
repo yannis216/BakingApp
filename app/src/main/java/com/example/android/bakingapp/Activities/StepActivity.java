@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.Models.Recipe;
@@ -23,7 +24,7 @@ import com.google.android.exoplayer2.util.Util;
 
 import java.util.List;
 
-public class StepActivity extends AppCompatActivity {
+public class StepActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Integer givenStepId;
     private Recipe recipe;
@@ -31,6 +32,9 @@ public class StepActivity extends AppCompatActivity {
     private PlayerView playerView;
     private SimpleExoPlayer player;
     List<Step> steps;
+    TextView tvStepLongDesc;
+    Button nextButton;
+    Button prevButton;
 
 
     @Override
@@ -38,8 +42,14 @@ public class StepActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step);
 
-        TextView tvStepLongDesc = findViewById(R.id.tv_longDesc);
+        tvStepLongDesc = findViewById(R.id.tv_longDesc);
         playerView = findViewById(R.id.pv_Step);
+        nextButton = findViewById(R.id.bn_next);
+        prevButton = findViewById(R.id.bn_prev);
+
+        nextButton.setOnClickListener(this);
+        prevButton.setOnClickListener(this);
+
 
 
         // Get Recipe and CurrentStepId from ViewModel or Intent
@@ -57,17 +67,7 @@ public class StepActivity extends AppCompatActivity {
         }
 
         steps = recipe.getSteps();
-        Step requestedStep = findStepById(steps, givenStepId);
-        String url = requestedStep.getVideoURL();
-
-        if (url != ""){
-            setupExoPlayer(url);
-        }
-        else{
-            playerView.setVisibility(View.GONE);
-        }
-
-        tvStepLongDesc.setText(requestedStep.getDescription());
+        updateUi(viewModel.getCurrentStepId());
 
     }
 
@@ -80,21 +80,34 @@ public class StepActivity extends AppCompatActivity {
         return null;
     }
 
-    private void updateWithNewId(int id){
+    private void updateModelWithNewId(int id){
         viewModel.setCurrentStepId(id);
-        Step newStep = findStepById(steps, id);
-        String url = newStep.getVideoURL();
+          //TODO Finish this (maybe build one fits all function? and implement with buttons
+        updateUi(id);
+
+    }
+
+    private void updateUi(int id){
+        Step requestedStep = findStepById(steps, id);
+        String url = requestedStep.getVideoURL();
         if (url != ""){
             setupExoPlayer(url);
         }
         else{
+            if(player != null){
+                player.release();
+            }
             playerView.setVisibility(View.GONE);
         }
-        tvStepLongDesc.setText(requestedStep.getDescription());  //TODO Finish this (maybe build one fits all function? and implement with buttons
-
+        tvStepLongDesc.setText(requestedStep.getDescription());
+        adjustPrevNextButtons(id);
     }
 
     private void setupExoPlayer(String url){
+        playerView.setVisibility(View.VISIBLE);
+        if(player != null){
+            player.release();
+        }
         Uri videoUri = Uri.parse(url);
         player = ExoPlayerFactory.newSimpleInstance(this);
         playerView.setPlayer(player);
@@ -104,9 +117,6 @@ public class StepActivity extends AppCompatActivity {
                 .createMediaSource(videoUri);
         player.prepare(videoSource);
     }
-
-    //TODO Call ExoPlayer.release somewhere (but where?)
-
 
     @Override
     protected void onPause() {
@@ -122,6 +132,34 @@ public class StepActivity extends AppCompatActivity {
         super.onDestroy();
         if(player != null){
             player.release();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.bn_next:
+                int nextStepId = viewModel.getCurrentStepId()+1;
+                updateModelWithNewId(nextStepId);
+                break;
+            case R.id.bn_prev:
+                int prevStepId = viewModel.getCurrentStepId()-1;
+                updateModelWithNewId(prevStepId);
+        }
+
+    }
+    private void adjustPrevNextButtons(int id){
+        if(findStepById(steps, id+1)==null){
+            nextButton.setVisibility(View.GONE);
+        }
+        else{
+            nextButton.setVisibility(View.VISIBLE);
+        }
+        if(findStepById(steps, id-1)==null){
+            prevButton.setVisibility(View.GONE);
+        }
+        else{
+            prevButton.setVisibility(View.VISIBLE);
         }
     }
 }
