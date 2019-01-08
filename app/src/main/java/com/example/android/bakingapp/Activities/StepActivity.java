@@ -30,6 +30,7 @@ public class StepActivity extends AppCompatActivity {
     private StepViewModel viewModel;
     private PlayerView playerView;
     private SimpleExoPlayer player;
+    List<Step> steps;
 
 
     @Override
@@ -48,15 +49,15 @@ public class StepActivity extends AppCompatActivity {
             recipe = (Recipe) intent.getSerializableExtra("Recipe");
             givenStepId = intent.getIntExtra("selectedStep", 0);
             viewModel.setRecipe(recipe);
+            viewModel.setCurrentStepId(givenStepId);
         }
         else{
             recipe = viewModel.getRecipe();
             givenStepId = viewModel.getCurrentStepId();
         }
 
-        List<Step> steps = recipe.getSteps();
+        steps = recipe.getSteps();
         Step requestedStep = findStepById(steps, givenStepId);
-
         String url = requestedStep.getVideoURL();
 
         if (url != ""){
@@ -65,9 +66,6 @@ public class StepActivity extends AppCompatActivity {
         else{
             playerView.setVisibility(View.GONE);
         }
-
-
-
 
         tvStepLongDesc.setText(requestedStep.getDescription());
 
@@ -79,9 +77,22 @@ public class StepActivity extends AppCompatActivity {
                 return step;
             }
         }
-        return null;        
+        return null;
     }
 
+    private void updateWithNewId(int id){
+        viewModel.setCurrentStepId(id);
+        Step newStep = findStepById(steps, id);
+        String url = newStep.getVideoURL();
+        if (url != ""){
+            setupExoPlayer(url);
+        }
+        else{
+            playerView.setVisibility(View.GONE);
+        }
+        tvStepLongDesc.setText(requestedStep.getDescription());  //TODO Finish this (maybe build one fits all function? and implement with buttons
+
+    }
 
     private void setupExoPlayer(String url){
         Uri videoUri = Uri.parse(url);
