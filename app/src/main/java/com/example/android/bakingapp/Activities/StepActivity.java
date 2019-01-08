@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -139,27 +140,58 @@ public class StepActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.bn_next:
-                int nextStepId = viewModel.getCurrentStepId()+1;
+                Integer nextStepId = findNextStepId(viewModel.getCurrentStepId());
                 updateModelWithNewId(nextStepId);
                 break;
             case R.id.bn_prev:
-                int prevStepId = viewModel.getCurrentStepId()-1;
+                int prevStepId = findPrevStepId(viewModel.getCurrentStepId());
                 updateModelWithNewId(prevStepId);
         }
 
     }
     private void adjustPrevNextButtons(int id){
-        if(findStepById(steps, id+1)==null){
+        if(findNextStepId(id)==null){
             nextButton.setVisibility(View.GONE);
         }
         else{
             nextButton.setVisibility(View.VISIBLE);
         }
-        if(findStepById(steps, id-1)==null){
+        if(findPrevStepId(id)== -1){
             prevButton.setVisibility(View.GONE);
         }
         else{
             prevButton.setVisibility(View.VISIBLE);
         }
+    }
+
+    private Integer findNextStepId(int id){
+        int maxId = 0;
+        int nextStepId = 0;
+        for(Step step : steps){
+            maxId =step.getId();
+            //FindNextId
+            if(step.getId() > id && nextStepId == 0){
+                nextStepId =step.getId();
+            }
+        }
+        Log.e("Max Id", ""+maxId);
+        //Wenn die momentane id  >= der maximalen Id ist -> kein nächster Step
+        if (id >= maxId){
+            return null;
+        }
+        else{
+            Log.e("Next Step Id", ""+nextStepId);
+            return nextStepId;
+        }
+    }
+    private Integer findPrevStepId(int id){
+        int prevStepId = -1;
+        for(Step step : steps) {
+            //find prevId
+            if (step.getId() < id) {
+                prevStepId = step.getId();
+            }
+        }
+        return prevStepId;
     }
 }
