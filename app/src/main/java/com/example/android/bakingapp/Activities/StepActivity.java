@@ -171,11 +171,9 @@ public class StepActivity extends AppCompatActivity implements View.OnClickListe
             maxId =step.getId();
             //FindNextId
             if(step.getId() > id && nextStepId == 0){
-                nextStepId =step.getId();
+                nextStepId =step.getId();  //TODO Simplify, I think maxId is not necessary but not sure
             }
         }
-        Log.e("Max Id", ""+maxId);
-        //Wenn die momentane id  >= der maximalen Id ist -> kein nächster Step
         if (id >= maxId){
             return null;
         }
