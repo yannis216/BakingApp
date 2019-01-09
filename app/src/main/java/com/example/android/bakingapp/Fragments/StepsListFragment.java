@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.bakingapp.Activities.StepActivity;
 import com.example.android.bakingapp.Adapters.IngredientsAdapter;
 import com.example.android.bakingapp.Adapters.StepsAdapter;
 import com.example.android.bakingapp.Models.Ingredient;
@@ -34,10 +33,34 @@ public class StepsListFragment extends Fragment implements StepsAdapter.StepOnCl
     private RecyclerView.LayoutManager mStepsLayoutManager;
     private RecipeViewModel viewModel;
     private Recipe recipe;
+    OnStepClickListener mCallback;
+
+    public interface  OnStepClickListener{
+        void onStepSelected(int position);
+    }
+
+
+
+
 
 
     public StepsListFragment(){
 
+    }
+
+    //This whole Override makes sure that I (or other developers) in future always implement
+    //OnStepClickListener when using this Fragment in an Activity.
+    //So for this project its actually useless but I should think about it in the future
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try{
+            mCallback = (OnStepClickListener) context;
+        }catch (ClassCastException e){
+            throw new ClassCastException(context.toString()
+                    +"must implement OnStepClickListener");
+        }
     }
 
     @Nullable
@@ -95,12 +118,7 @@ public class StepsListFragment extends Fragment implements StepsAdapter.StepOnCl
 
     @Override
     public void onClick(Step requestedStep){
-        Context context = getContext();
-
-        Intent startStepActivityIntent = new Intent(context, StepActivity.class);
-        startStepActivityIntent.putExtra("Recipe", recipe);
-        startStepActivityIntent.putExtra("selectedStep", requestedStep.getId());
-        startActivity(startStepActivityIntent);
+        mCallback.onStepSelected(requestedStep.getId());
     }
 }
 

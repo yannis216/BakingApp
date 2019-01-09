@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.bakingapp.Fragments.StepsListFragment;
 import com.example.android.bakingapp.Models.Recipe;
@@ -17,7 +18,7 @@ import com.google.android.exoplayer2.ui.PlayerView;
 
 import java.util.List;
 
-public class StepActivity extends AppCompatActivity {
+public class StepActivity extends AppCompatActivity implements StepsListFragment.OnStepClickListener{
 
     private Integer givenStepId;
     private Recipe recipe;
@@ -44,5 +45,9 @@ public class StepActivity extends AppCompatActivity {
                 .commit();
 
 
+    }
+
+    public void onStepSelected(int stepId){
+        Toast.makeText(this, "Step Clicked: " +stepId, Toast.LENGTH_SHORT).show();
     }
 }
