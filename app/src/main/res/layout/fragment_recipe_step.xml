@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activities.StepActivity">
+    tools:context=".Activities.RecipeActivity">
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/pv_Step"
         android:layout_width="match_parent"

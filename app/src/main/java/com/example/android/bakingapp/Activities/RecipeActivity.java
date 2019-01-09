@@ -9,7 +9,7 @@ import com.example.android.bakingapp.Fragments.RecipeStepFragment;
 import com.example.android.bakingapp.Fragments.StepsListFragment;
 import com.example.android.bakingapp.R;
 
-public class StepActivity extends AppCompatActivity implements StepsListFragment.OnStepClickListener{
+public class RecipeActivity extends AppCompatActivity implements StepsListFragment.OnStepClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
