@@ -1,10 +1,13 @@
 package com.example.android.bakingapp.Activities;
 
+
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.android.bakingapp.Fragments.RecipeStepFragment;
 import com.example.android.bakingapp.Models.Recipe;
 import com.example.android.bakingapp.Models.Step;
 import com.example.android.bakingapp.Models.StepViewModel;
@@ -31,6 +34,14 @@ public class StepActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step);
+
+        RecipeStepFragment stepFragment = new RecipeStepFragment();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        fragmentManager.beginTransaction()
+                .add(R.id.recipe_step_container, stepFragment)
+                .commit();
 
 
     }
