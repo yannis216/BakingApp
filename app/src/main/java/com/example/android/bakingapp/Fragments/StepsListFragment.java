@@ -109,7 +109,7 @@ public class StepsListFragment extends Fragment implements StepsAdapter.StepOnCl
 
     @Override
     public void onClick(Step requestedStep){
-        mCallback.onStepSelected(); //TODO Maybe i can remove this passing of the id here later
+        mCallback.onStepSelected();
         viewModel.setCurrentStepId(requestedStep.getId());
 
     }
