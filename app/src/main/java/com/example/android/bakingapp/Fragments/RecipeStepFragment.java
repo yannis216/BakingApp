@@ -1,5 +1,6 @@
 package com.example.android.bakingapp.Fragments;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,8 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.Models.Recipe;
-import com.example.android.bakingapp.Models.Step;
 import com.example.android.bakingapp.Models.SharedStepViewModel;
+import com.example.android.bakingapp.Models.Step;
 import com.example.android.bakingapp.R;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -30,7 +31,7 @@ import com.google.android.exoplayer2.util.Util;
 import java.util.List;
 
 public class RecipeStepFragment extends Fragment implements View.OnClickListener {
-    private Integer givenStepId;
+    private LiveData<Integer> givenStepId;
     private Recipe recipe;
     private SharedStepViewModel viewModel;
     private PlayerView playerView;
@@ -59,12 +60,13 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
 
         // Get Recipe and CurrentStepId from ViewModel or Intent
         viewModel = ViewModelProviders.of(getActivity()).get(SharedStepViewModel.class);
-        if(viewModel.getRecipe() == null || viewModel.getCurrentStepId() ==null) {
+        if(viewModel.getRecipe() == null && viewModel.getCurrentStepId() == null) {
             Intent intent = getActivity().getIntent();
             recipe = (Recipe) intent.getSerializableExtra("requested");
-            givenStepId = intent.getIntExtra("selectedStep", 0);
             viewModel.setRecipe(recipe);
-            viewModel.setCurrentStepId(givenStepId);
+            viewModel.setCurrentStepId(0); //If no Info given, display first step
+            // TODO May change this to displaying ingredients
+            //TODO This MAY have to observe changes of the Livedata currentStepId to work properly in DoublePaneLayout. If not needed -> remove Live Data stuff
         }
         else{
             recipe = viewModel.getRecipe();
@@ -72,7 +74,7 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
         }
 
         steps = recipe.getSteps();
-        updateUi(viewModel.getCurrentStepId());
+        updateUi(viewModel.getCurrentStepId().getValue());
         return rootView;
 
     }
@@ -145,11 +147,11 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.bn_next:
-                Integer nextStepId = findNextStepId(viewModel.getCurrentStepId());
+                Integer nextStepId = findNextStepId(viewModel.getCurrentStepId().getValue());
                 updateModelWithNewId(nextStepId);
                 break;
             case R.id.bn_prev:
-                int prevStepId = findPrevStepId(viewModel.getCurrentStepId());
+                int prevStepId = findPrevStepId(viewModel.getCurrentStepId().getValue());
                 updateModelWithNewId(prevStepId);
         }
 

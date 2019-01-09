@@ -9,15 +9,12 @@ public class SharedStepViewModel extends ViewModel {
     private Recipe recipe;
     private final MutableLiveData<Integer> currentStepId = new MutableLiveData<>();
 
-
-
     public Recipe getRecipe() {
         return recipe;
     }
 
     public void setRecipe(Recipe newRecipe){
         recipe = newRecipe;
-
     }
 
     public LiveData<Integer> getCurrentStepId() {
