@@ -45,7 +45,6 @@ public class StepsListFragment extends Fragment implements StepsAdapter.StepOnCl
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_steps_list, container, false);
 
-
         TextView tvIngredientsHeader = rootView.findViewById(R.id.tv_ingredients_header);
         mRvIngredients = rootView.findViewById(R.id.rv_recipeIngredients);
         mRvSteps = rootView.findViewById(R.id.rv_recipeShortDescs);

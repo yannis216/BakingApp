@@ -54,9 +54,9 @@ public class RecipesActivity extends AppCompatActivity implements RecipesAdapter
     public void onClick(Recipe requestedRecipe){
         Context context = this;
 
-        Intent startRecipeActivityIntent = new Intent(context, RecipeActivity.class);
-        startRecipeActivityIntent.putExtra("requested", requestedRecipe);
-        startActivity(startRecipeActivityIntent);
+        Intent startStepActivityIntent = new Intent(context, StepActivity.class);
+        startStepActivityIntent.putExtra("requested", requestedRecipe);
+        startActivity(startStepActivityIntent);
     }
 
 
