@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.android.bakingapp.Models.Recipe;
 import com.example.android.bakingapp.Models.Step;
-import com.example.android.bakingapp.Models.StepViewModel;
+import com.example.android.bakingapp.Models.SharedStepViewModel;
 import com.example.android.bakingapp.R;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -32,7 +32,7 @@ import java.util.List;
 public class RecipeStepFragment extends Fragment implements View.OnClickListener {
     private Integer givenStepId;
     private Recipe recipe;
-    private StepViewModel viewModel;
+    private SharedStepViewModel viewModel;
     private PlayerView playerView;
     private SimpleExoPlayer player;
     List<Step> steps;
@@ -58,7 +58,7 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
 
 
         // Get Recipe and CurrentStepId from ViewModel or Intent
-        viewModel = ViewModelProviders.of(this).get(StepViewModel.class);
+        viewModel = ViewModelProviders.of(getActivity()).get(SharedStepViewModel.class);
         if(viewModel.getRecipe() == null || viewModel.getCurrentStepId() ==null) {
             Intent intent = getActivity().getIntent();
             recipe = (Recipe) intent.getSerializableExtra("requested");

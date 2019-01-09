@@ -8,10 +8,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.bakingapp.Fragments.RecipeStepFragment;
 import com.example.android.bakingapp.Fragments.StepsListFragment;
 import com.example.android.bakingapp.Models.Recipe;
 import com.example.android.bakingapp.Models.Step;
-import com.example.android.bakingapp.Models.StepViewModel;
+import com.example.android.bakingapp.Models.SharedStepViewModel;
 import com.example.android.bakingapp.R;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
@@ -22,7 +23,7 @@ public class StepActivity extends AppCompatActivity implements StepsListFragment
 
     private Integer givenStepId;
     private Recipe recipe;
-    private StepViewModel viewModel;
+    private SharedStepViewModel viewModel;
     private PlayerView playerView;
     private SimpleExoPlayer player;
     List<Step> steps;
@@ -49,5 +50,14 @@ public class StepActivity extends AppCompatActivity implements StepsListFragment
 
     public void onStepSelected(int stepId){
         Toast.makeText(this, "Step Clicked: " +stepId, Toast.LENGTH_SHORT).show();
+
+        RecipeStepFragment recipeStepFragment = new RecipeStepFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .add(R.id.recipe_step_container, recipeStepFragment)
+                .commit();
+
+
+
     }
 }

@@ -19,7 +19,7 @@ import com.example.android.bakingapp.Adapters.IngredientsAdapter;
 import com.example.android.bakingapp.Adapters.StepsAdapter;
 import com.example.android.bakingapp.Models.Ingredient;
 import com.example.android.bakingapp.Models.Recipe;
-import com.example.android.bakingapp.Models.RecipeViewModel;
+import com.example.android.bakingapp.Models.SharedStepViewModel;
 import com.example.android.bakingapp.Models.Step;
 import com.example.android.bakingapp.R;
 
@@ -31,18 +31,13 @@ public class StepsListFragment extends Fragment implements StepsAdapter.StepOnCl
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mIngredientsLayoutManager;
     private RecyclerView.LayoutManager mStepsLayoutManager;
-    private RecipeViewModel viewModel;
+    private SharedStepViewModel viewModel;
     private Recipe recipe;
     OnStepClickListener mCallback;
 
     public interface  OnStepClickListener{
         void onStepSelected(int position);
     }
-
-
-
-
-
 
     public StepsListFragment(){
 
@@ -72,7 +67,7 @@ public class StepsListFragment extends Fragment implements StepsAdapter.StepOnCl
         mRvIngredients = rootView.findViewById(R.id.rv_recipeIngredients);
         mRvSteps = rootView.findViewById(R.id.rv_recipeShortDescs);
 
-        viewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
+        viewModel = ViewModelProviders.of(getActivity()).get(SharedStepViewModel.class);
 
         if(viewModel.getRecipe() == null) {
             Intent intent = getActivity().getIntent();
@@ -89,10 +84,6 @@ public class StepsListFragment extends Fragment implements StepsAdapter.StepOnCl
         generateStepsList(recipe.getSteps());
 
         return rootView;
-
-
-
-
 
     }
 
