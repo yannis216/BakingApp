@@ -17,5 +17,4 @@
 
 </LinearLayout>
 
-<!-- TODO Somehow do this with a listview and custom array adapter https://www.journaldev.com/10416/android-listview-with-custom-adapter-example-tutorial ?
- But first create a simple widget using this to udnerstand process https://medium.com/android-bits/android-widgets-ad3d166458d3 -->
+<!-- TODO Somehow do this with a listview and custom array adapter https://www.journaldev.com/10416/android-listview-with-custom-adapter-example-tutorial ? -->
