@@ -60,7 +60,7 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
 
         // Get Recipe and CurrentStepId from ViewModel or Intent
         viewModel = ViewModelProviders.of(getActivity()).get(SharedStepViewModel.class);
-        if(viewModel.getRecipe() == null && viewModel.getCurrentStepId() == null) {
+        if(viewModel.getRecipe() == null || viewModel.getCurrentStepId() == null) {
             Intent intent = getActivity().getIntent();
             recipe = (Recipe) intent.getSerializableExtra("requested");
             viewModel.setRecipe(recipe);
