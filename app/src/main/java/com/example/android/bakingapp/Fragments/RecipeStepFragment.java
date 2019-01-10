@@ -35,7 +35,7 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
     private LiveData<Integer> givenStepId;
     private Recipe recipe;
     private SharedStepViewModel viewModel;
-    private PlayerView playerView;
+    private PlayerView playerView; 
     private SimpleExoPlayer player;
     List<Step> steps;
     TextView tvStepLongDesc;
@@ -102,7 +102,6 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
 
     private void updateModelWithNewId(int id){
         viewModel.setCurrentStepId(id);
-        //TODO Finish this (maybe build one fits all function? and implement with buttons
         updateUi(id);
 
     }
