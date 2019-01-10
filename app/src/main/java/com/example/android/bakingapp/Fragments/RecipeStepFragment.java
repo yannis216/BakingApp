@@ -60,13 +60,10 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
 
         // Get Recipe and CurrentStepId from ViewModel or Intent
         viewModel = ViewModelProviders.of(getActivity()).get(SharedStepViewModel.class);
-        if(viewModel.getRecipe() == null || viewModel.getCurrentStepId() == null) {
+        if(viewModel.getRecipe() == null) {
             Intent intent = getActivity().getIntent();
             recipe = (Recipe) intent.getSerializableExtra("requested");
             viewModel.setRecipe(recipe);
-            viewModel.setCurrentStepId(0); //If no Info given, display first step
-            // TODO May change this to displaying ingredients
-            //TODO This MAY have to observe changes of the Livedata currentStepId to work properly in DoublePaneLayout. If not needed -> remove Live Data stuff
         }
         else{
             recipe = viewModel.getRecipe();
@@ -75,7 +72,7 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
 
         steps = recipe.getSteps();
         if(viewModel.getCurrentStepId().getValue() == null){
-            viewModel.setCurrentStepId(1);
+            viewModel.setCurrentStepId(0);
         }
         updateUi(viewModel.getCurrentStepId().getValue());
         return rootView;
