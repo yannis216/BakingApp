@@ -1,6 +1,7 @@
 package com.example.android.bakingapp.Fragments;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
@@ -71,6 +72,17 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
         }
 
         steps = recipe.getSteps();
+
+        //LiveData Observer to make sure Ui gets updated in two-pane mode. Could have done this with lambda expressions but somehow didnt work (Or I didnt try hard enough)
+        final Observer<Integer> idObserver = new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                updateUi(integer);
+            }
+        };
+        viewModel.getCurrentStepId().observe(this, idObserver);
+
+
         if(viewModel.getCurrentStepId().getValue() == null){
             viewModel.setCurrentStepId(0);
         }
