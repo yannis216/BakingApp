@@ -35,7 +35,7 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
     private LiveData<Integer> givenStepId;
     private Recipe recipe;
     private SharedStepViewModel viewModel;
-    private PlayerView playerView; 
+    private PlayerView playerView;
     private SimpleExoPlayer player;
     List<Step> steps;
     TextView tvStepLongDesc;
@@ -135,6 +135,7 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
         MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(videoUri);
         player.prepare(videoSource);
+        //TODO Handle case where media is in thumbnailurl, generally handle pictures in thumbnailurl  and put a placeholder picture
     }
 
     @Override

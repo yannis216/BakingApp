@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+</LinearLayout>
+
+<!-- TODO Somehow do this with a listview and custom array adapter https://www.journaldev.com/10416/android-listview-with-custom-adapter-example-tutorial ?
+ But first create a simple widget using this to udnerstand process https://medium.com/android-bits/android-widgets-ad3d166458d3 -->
