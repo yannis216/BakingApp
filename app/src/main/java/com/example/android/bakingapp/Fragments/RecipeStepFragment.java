@@ -74,6 +74,9 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
         }
 
         steps = recipe.getSteps();
+        if(viewModel.getCurrentStepId().getValue() == null){
+            viewModel.setCurrentStepId(1);
+        }
         updateUi(viewModel.getCurrentStepId().getValue());
         return rootView;
 
