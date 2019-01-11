@@ -1,6 +1,8 @@
 package com.example.android.bakingapp.Activities;
 
+import android.appwidget.AppWidgetManager;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import com.example.android.bakingapp.Models.Recipe;
 import com.example.android.bakingapp.Models.RecipesViewModel;
 import com.example.android.bakingapp.Network.RetrofitClientInstance;
 import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.Widget.IngredientsWidget;
 
 import java.util.List;
 
@@ -53,6 +56,12 @@ public class RecipesActivity extends AppCompatActivity implements RecipesAdapter
     @Override
     public void onClick(Recipe requestedRecipe){
         Context context = this;
+
+        //TODO Widget Checkback working?
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, IngredientsWidget.class));
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.lv_ingredients_widget);
+
 
         Intent startStepActivityIntent = new Intent(context, RecipeActivity.class);
         startStepActivityIntent.putExtra("requested", requestedRecipe);
