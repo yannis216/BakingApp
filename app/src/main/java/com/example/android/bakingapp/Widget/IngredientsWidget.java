@@ -1,49 +1,18 @@
 package com.example.android.bakingapp.Widget;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.example.android.bakingapp.Activities.RecipesActivity;
 import com.example.android.bakingapp.R;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class IngredientsWidget extends AppWidgetProvider {
-
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
-
-        // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
-
-        // Intent intent = new Intent (context, RecipesActivity.class);
-        //PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        //TODO views.setOnClickPendingIntent(R.id.appwidget_text, pendingIntent);
-        //TODO This here is still strange
-
-
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
-    }
-
-    private static RemoteViews getListRemoteViews(Context context){
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
-
-        Intent intent = new Intent(context, RemoteViewsService.class);
-        views.setRemoteAdapter(R.id.lv_ingredients_widget, intent);
-
-        Intent appIntent = new Intent(context, RecipesActivity.class); //TODO CHANGE?
-        PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setPendingIntentTemplate(R.id.lv_ingredients_widget, appPendingIntent);
-
-        return views;
-    }
-
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -53,9 +22,12 @@ public class IngredientsWidget extends AppWidgetProvider {
                     context.getPackageName(),
                     R.layout.ingredients_widget
             );
-            Intent intent = new Intent(context, RemoteViewsService.class);
+
+            Intent intent = new Intent(context, WidgetRemoteViewsService.class);
             views.setRemoteAdapter(R.id.lv_ingredients_widget, intent);
             appWidgetManager.updateAppWidget(appWidgetId, views);
+
+            Log.e("onUpdate", "Wurde gecalled");
         }
 
     }

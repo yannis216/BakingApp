@@ -27,14 +27,12 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
         mInflater = LayoutInflater.from(context);
         this.steps = stepsList;
         mClickHandler = clickHandler;
-        Log.e("StepsAdapterConstructor", "wird gecalled");
     }
 
     public class StepsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public StepsViewHolder(View view){
             super(view);
             view.setOnClickListener(this);
-            Log.e("StepsViewHolder", "wird gecalled");
         }
 
         @Override

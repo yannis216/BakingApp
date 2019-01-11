@@ -1,6 +1,8 @@
 package com.example.android.bakingapp.Widget;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -15,17 +17,19 @@ import java.util.List;
     Context mContext;
     List<Ingredient> ingredientList;
 
-    public ListRemoteViewsFactory(Context applicationContext) {
+    public ListRemoteViewsFactory(Context applicationContext, Intent intent) {
         mContext = applicationContext;
     }
 
     @Override
     public void onCreate() {
+        Log.e("Factory onCreate", "Wurde gecalled");
 
     }
 
     @Override
     public void onDataSetChanged() {
+        Log.e("onDataSetChanged", "Wurde gecalled");
 
     }
 
@@ -36,22 +40,25 @@ import java.util.List;
 
     @Override
     public int getCount() {
+        Log.e("getCount", "Wurde gecalled");
         if(ingredientList ==null){
-            return 0;
+            return 5;
         }
         return ingredientList.size();
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
-        if( ingredientList == null || ingredientList.size() == 0){
+        Log.e("getViewAt", "Wurde gecalled");
+        if( ingredientList == null || ingredientList.size() == 0) {
             return null;
         }
+
         String ingredient = ingredientList.get(position).getIngredient();
-        String quantity = "" +ingredientList.get(position).getQuantity();
+        String quantity = ""+ ingredientList.get(position).getQuantity();
         String measure = ingredientList.get(position).getMeasure();
 
-        RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.ingredients_widget);
+        RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.activity_recipe_ingredient_list_item);
         views.setTextViewText(R.id.tv_ingredients_ingredient, ingredient);
         views.setTextViewText(R.id.tv_ingredients_quantity, quantity);
         views.setTextViewText(R.id.tv_ingredients_measure, measure);
@@ -70,12 +77,12 @@ import java.util.List;
 
     @Override
     public int getViewTypeCount() {
-        return 0;
-    }
+        return 2;
+    }  //TODO May change this depoening on final listview layout!
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i; //TODO oder einfach 1 setzen?
     }
 
     @Override
