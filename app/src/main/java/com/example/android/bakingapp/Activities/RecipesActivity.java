@@ -58,8 +58,6 @@ public class RecipesActivity extends AppCompatActivity implements RecipesAdapter
         Context context = this;
 
         saveRecipeToSharedPreferences(requestedRecipe);
-        //TODO Make Helper Function
-
 
         Intent intent = new Intent(this, IngredientsWidget.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);

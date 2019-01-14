@@ -11,12 +11,12 @@
         android:id="@+id/widgetTitleLabel"
         android:textColor="#000"
         android:background="@color/colorPrimary"
-        android:text="@string/appwidget_text"
+        android:text="@string/ingredients_header"
         android:textSize="18dp"
         android:gravity="center"
         android:textAllCaps="true"
         android:layout_height="wrap_content" />
-    <!-- TODO Movie to Strings -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

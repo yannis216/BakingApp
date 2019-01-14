@@ -11,11 +11,14 @@ import com.example.android.bakingapp.R;
 
 public class RecipeActivity extends AppCompatActivity implements StepsListFragment.OnStepClickListener{
     private Boolean mTwoPane;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+        final int STATE_STEPS = 1;
+        final int STATE_STEP = 2;
 
         if(findViewById(R.id.dp600_recipe_layout) != null)
         {
@@ -30,27 +33,32 @@ public class RecipeActivity extends AppCompatActivity implements StepsListFragme
             FragmentManager fragmentManager = getSupportFragmentManager();
 
             fragmentManager.beginTransaction()
-                    .add(R.id.sw600dp_steps_list_container, stepsListFragment)
+                    .replace(R.id.sw600dp_steps_list_container, stepsListFragment)
                     .commit();
 
 
             RecipeStepFragment recipeStepFragment = new RecipeStepFragment();
             // FragmentManager fragmentManager = getSupportFragmentManager();
-            // TODO Necessary to make seconf Manager?
             fragmentManager.beginTransaction()
                     .replace(R.id.sw600dp_recipe_step_container, recipeStepFragment)
                     .commit();
 
         }else{
-            StepsListFragment stepsListFragment = new StepsListFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
+                StepsListFragment stepsListFragment = new StepsListFragment();
+                fragmentManager = getSupportFragmentManager();
 
-            fragmentManager.beginTransaction()
-                    .add(R.id.recipe_step_container, stepsListFragment)
-                    .commit();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.recipe_step_container, stepsListFragment)
+                        .commit();
         }
 
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        
+        super.onSaveInstanceState(outState);
     }
 
     public void onStepSelected(){
@@ -64,4 +72,6 @@ public class RecipeActivity extends AppCompatActivity implements StepsListFragme
         }
 
     }
+
+
 }

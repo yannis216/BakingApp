@@ -40,7 +40,6 @@ public class StepsListFragment extends Fragment implements StepsAdapter.StepOnCl
     }
 
     public StepsListFragment(){
-
     }
 
     //This whole Override makes sure that I (or other developers) in future always implement
@@ -78,7 +77,7 @@ public class StepsListFragment extends Fragment implements StepsAdapter.StepOnCl
             recipe = viewModel.getRecipe();
         }
 
-        tvIngredientsHeader.setText("Ingredients"); //TODO Move to Strings.xml
+        tvIngredientsHeader.setText(getResources().getString(R.string.ingredients_header));
 
         generateIngredientsList(recipe.getIngredients());
         generateStepsList(recipe.getSteps());

@@ -190,7 +190,7 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
             maxId =step.getId();
             //FindNextId
             if(step.getId() > id && nextStepId == 0){
-                nextStepId =step.getId();  //TODO Simplify, I think maxId is not necessary but not sure
+                nextStepId =step.getId();
             }
         }
         if (id >= maxId){
