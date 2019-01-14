@@ -41,9 +41,12 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
     TextView tvStepLongDesc;
     Button nextButton;
     Button prevButton;
+    long playerPosition;
     public RecipeStepFragment(){
 
     }
+
+
 
     @Nullable
     @Override
@@ -139,12 +142,17 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
         //TODO Handle case where media is in thumbnailurl, generally handle pictures in thumbnailurl  and put a placeholder picture
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupExoPlayer(findStepById(steps, viewModel.getCurrentStepId().getValue()).getVideoURL());
+
+    }
+
     @Override
     public void onPause() {
         super.onPause();
-        if(player != null){
-            player.release();
-        }
 
     }
 
@@ -153,6 +161,7 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
         super.onDestroy();
         if(player != null){
             player.release();
+            player = null;
         }
     }
 
