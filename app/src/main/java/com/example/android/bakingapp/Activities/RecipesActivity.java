@@ -1,8 +1,11 @@
 package com.example.android.bakingapp.Activities;
 
+import android.appwidget.AppWidgetManager;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,10 +14,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.android.bakingapp.Adapters.RecipesAdapter;
+import com.example.android.bakingapp.IngredientsWidget.IngredientsWidget;
+import com.example.android.bakingapp.Models.Ingredient;
 import com.example.android.bakingapp.Models.Recipe;
 import com.example.android.bakingapp.Models.RecipesViewModel;
 import com.example.android.bakingapp.Network.RetrofitClientInstance;
 import com.example.android.bakingapp.R;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -28,12 +34,14 @@ public class RecipesActivity extends AppCompatActivity implements RecipesAdapter
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecipesViewModel viewModel;
+    SharedPreferences mPrefs;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
+        mPrefs = getSharedPreferences("mPreference", 0);
 
         mRvRecipeCards =(RecyclerView) findViewById(R.id.rv_recipecards);
 
@@ -49,6 +57,28 @@ public class RecipesActivity extends AppCompatActivity implements RecipesAdapter
     @Override
     public void onClick(Recipe requestedRecipe){
         Context context = this;
+
+        List<Ingredient> ingredients = requestedRecipe.getIngredients();
+
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(requestedRecipe);
+        prefsEditor.putString("ingredients", json);
+        prefsEditor.commit();
+
+        //TODO Make Helper Function
+
+
+        Intent intent = new Intent(this, IngredientsWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+// Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
+// since it seems the onUpdate() is only fired on that:
+        int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), IngredientsWidget.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        intent.putExtra("Recipe", requestedRecipe);
+        sendBroadcast(intent);
+
+        //TODO Intent aufräumen, extra Obnjekt wird nicht mehr gebraucht
 
         Intent startStepActivityIntent = new Intent(context, RecipeActivity.class);
         startStepActivityIntent.putExtra("requested", requestedRecipe);

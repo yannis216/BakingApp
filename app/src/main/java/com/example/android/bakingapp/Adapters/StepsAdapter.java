@@ -3,7 +3,6 @@ package com.example.android.bakingapp.Adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +51,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
         int layoutIdForListItem = R.layout.activity_recipe_desc_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean attachImmediately = false;
-        Log.e("onCreateViewHolder", "wird gecalled");
 
         View view = inflater.inflate(layoutIdForListItem, viewGroup, attachImmediately);
 
@@ -66,14 +64,12 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
         String stepShortDesc = currentStep.getShortDescription();
 
         TextView nameView = holder.itemView.findViewById(R.id.tv_recipe_desc_list_item);
-        Log.e("onBindViewHolder", "wird gecalled");
         nameView.setText(stepShortDesc);
 
 
     }
 
     public int getItemCount(){
-        Log.e("getItemCount", "Steps:" + steps.size());
         return steps.size();
     }
 

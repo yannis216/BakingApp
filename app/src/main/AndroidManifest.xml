@@ -20,7 +20,7 @@
         </activity>
         <activity android:name=".Activities.RecipeActivity" />
 
-        <receiver android:name=".Widget.IngredientsWidget">
+        <receiver android:name=".IngredientsWidget.IngredientsWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -30,7 +30,7 @@
                 android:resource="@xml/ingredients_widget_info" />
         </receiver>
         <service
-            android:name=".Widget.WidgetRemoteViewsService"
+            android:name=".IngredientsWidget.IngredientWidgetRemoteViewsService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 

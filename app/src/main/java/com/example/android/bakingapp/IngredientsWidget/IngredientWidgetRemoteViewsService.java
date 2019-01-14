@@ -1,12 +1,12 @@
-package com.example.android.bakingapp.Widget;
+package com.example.android.bakingapp.IngredientsWidget;
 
 import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViewsService;
 
-public class WidgetRemoteViewsService extends RemoteViewsService {
+public class IngredientWidgetRemoteViewsService extends RemoteViewsService {
     @Override
-    public RemoteViewsFactory onGetViewFactory(Intent intent) {
+    public ListRemoteViewsFactory onGetViewFactory(Intent intent) {
         Log.e("onGetViewFactory", "Wurde gecalled");
         return new ListRemoteViewsFactory(this.getApplicationContext(), intent);
     }

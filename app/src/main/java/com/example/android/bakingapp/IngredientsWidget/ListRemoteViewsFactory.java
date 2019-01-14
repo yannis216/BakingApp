@@ -1,13 +1,16 @@
-package com.example.android.bakingapp.Widget;
+package com.example.android.bakingapp.IngredientsWidget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.example.android.bakingapp.Models.Ingredient;
+import com.example.android.bakingapp.Models.Recipe;
 import com.example.android.bakingapp.R;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -16,9 +19,15 @@ import java.util.List;
     public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     Context mContext;
     List<Ingredient> ingredientList;
+    SharedPreferences mPrefs;
 
     public ListRemoteViewsFactory(Context applicationContext, Intent intent) {
         mContext = applicationContext;
+        Recipe recipe = (Recipe) intent.getSerializableExtra("Recipe");
+        Log.e("RemoteViewsFactory", "Recipe =" +recipe);
+        if(recipe != null) {
+            ingredientList = recipe.getIngredients();
+        }
     }
 
     @Override
@@ -29,7 +38,16 @@ import java.util.List;
 
     @Override
     public void onDataSetChanged() {
-        Log.e("onDataSetChanged", "Wurde gecalled");
+
+        mPrefs = mContext.getSharedPreferences("mPreference", 0);
+        Gson gson = new Gson();
+        Recipe recipe = gson.fromJson(mPrefs.getString("ingredients", ""),  Recipe.class);
+
+        //TODO MAKE Helper Function
+        ingredientList = recipe.getIngredients();
+
+        Log.e("onDataSetChanged", "Wurde gecalled mit " + this.ingredientList );
+
 
     }
 
@@ -40,16 +58,20 @@ import java.util.List;
 
     @Override
     public int getCount() {
-        Log.e("getCount", "Wurde gecalled");
+
         if(ingredientList ==null){
+            Log.e("getCount", "Wurde gecalled mit ingredientlist null");
             return 5;
         }
+        Log.e("getCount", "Wurde gecalled mit ingredientlist" +ingredientList.size());
         return ingredientList.size();
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
         Log.e("getViewAt", "Wurde gecalled");
+
+
         if( ingredientList == null || ingredientList.size() == 0) {
             return null;
         }
