@@ -23,17 +23,10 @@ import java.util.List;
 
     public ListRemoteViewsFactory(Context applicationContext, Intent intent) {
         mContext = applicationContext;
-        Recipe recipe = (Recipe) intent.getSerializableExtra("Recipe");
-        Log.e("RemoteViewsFactory", "Recipe =" +recipe);
-        if(recipe != null) {
-            ingredientList = recipe.getIngredients();
-        }
     }
 
     @Override
     public void onCreate() {
-        Log.e("Factory onCreate", "Wurde gecalled");
-
     }
 
     @Override
@@ -45,9 +38,6 @@ import java.util.List;
 
         //TODO MAKE Helper Function
         ingredientList = recipe.getIngredients();
-
-        Log.e("onDataSetChanged", "Wurde gecalled mit " + this.ingredientList );
-
 
     }
 
@@ -61,9 +51,8 @@ import java.util.List;
 
         if(ingredientList ==null){
             Log.e("getCount", "Wurde gecalled mit ingredientlist null");
-            return 5;
+            return 0;
         }
-        Log.e("getCount", "Wurde gecalled mit ingredientlist" +ingredientList.size());
         return ingredientList.size();
     }
 
@@ -100,11 +89,11 @@ import java.util.List;
     @Override
     public int getViewTypeCount() {
         return 2;
-    }  //TODO May change this depoening on final listview layout!
+    }  //TODO May change this depending on final listview layout!
 
     @Override
     public long getItemId(int i) {
-        return i; //TODO oder einfach 1 setzen?
+        return i;
     }
 
     @Override
