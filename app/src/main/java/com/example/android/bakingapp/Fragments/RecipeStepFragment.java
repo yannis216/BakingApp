@@ -41,7 +41,7 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
     TextView tvStepLongDesc;
     Button nextButton;
     Button prevButton;
-    long playerPosition;
+    long mPlayerPosition;
     public RecipeStepFragment(){
 
     }
@@ -59,6 +59,10 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
 
         nextButton.setOnClickListener(this);
         prevButton.setOnClickListener(this);
+
+        if (savedInstanceState != null){
+            mPlayerPosition = savedInstanceState.getLong("playerposition");
+        }
 
 
 
@@ -139,6 +143,10 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
         MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(videoUri);
         player.prepare(videoSource);
+        if(mPlayerPosition != 0){
+            player.seekTo(mPlayerPosition);
+
+        }
         //TODO Handle case where media is in thumbnailurl, generally handle pictures in thumbnailurl  and put a placeholder picture
     }
 
@@ -152,6 +160,11 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onPause() {
+        if(player != null){
+            mPlayerPosition = player.getCurrentPosition();
+            player.release();
+            player = null;
+        }
         super.onPause();
 
     }
@@ -160,6 +173,7 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
     public void onDestroy() {
         super.onDestroy();
         if(player != null){
+            mPlayerPosition =player.getCurrentPosition();
             player.release();
             player = null;
         }
@@ -224,7 +238,7 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-
+        outState.putLong("playerposition", mPlayerPosition);
         super.onSaveInstanceState(outState);
     }
 }
