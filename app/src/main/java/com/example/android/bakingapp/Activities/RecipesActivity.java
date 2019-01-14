@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.android.bakingapp.Adapters.RecipesAdapter;
 import com.example.android.bakingapp.IngredientsWidget.IngredientsWidget;
-import com.example.android.bakingapp.Models.Ingredient;
 import com.example.android.bakingapp.Models.Recipe;
 import com.example.android.bakingapp.Models.RecipesViewModel;
 import com.example.android.bakingapp.Network.RetrofitClientInstance;
@@ -58,14 +57,7 @@ public class RecipesActivity extends AppCompatActivity implements RecipesAdapter
     public void onClick(Recipe requestedRecipe){
         Context context = this;
 
-        List<Ingredient> ingredients = requestedRecipe.getIngredients();
-
-        SharedPreferences.Editor prefsEditor = mPrefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(requestedRecipe);
-        prefsEditor.putString("ingredients", json);
-        prefsEditor.commit();
-
+        saveRecipeToSharedPreferences(requestedRecipe);
         //TODO Make Helper Function
 
 
@@ -118,6 +110,14 @@ public class RecipesActivity extends AppCompatActivity implements RecipesAdapter
             generateRecipesList(recipes);
         }
 
+    }
+
+    public void saveRecipeToSharedPreferences(Recipe recipe){
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(recipe);
+        prefsEditor.putString("ingredients", json);
+        prefsEditor.commit();
     }
 
 }

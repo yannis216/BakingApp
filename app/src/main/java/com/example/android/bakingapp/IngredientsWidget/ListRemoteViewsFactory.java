@@ -3,7 +3,6 @@ package com.example.android.bakingapp.IngredientsWidget;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -35,8 +34,6 @@ import java.util.List;
         mPrefs = mContext.getSharedPreferences("mPreference", 0);
         Gson gson = new Gson();
         Recipe recipe = gson.fromJson(mPrefs.getString("ingredients", ""),  Recipe.class);
-
-        //TODO MAKE Helper Function
         ingredientList = recipe.getIngredients();
 
     }
@@ -50,7 +47,6 @@ import java.util.List;
     public int getCount() {
 
         if(ingredientList ==null){
-            Log.e("getCount", "Wurde gecalled mit ingredientlist null");
             return 0;
         }
         return ingredientList.size();
@@ -58,8 +54,6 @@ import java.util.List;
 
     @Override
     public RemoteViews getViewAt(int position) {
-        Log.e("getViewAt", "Wurde gecalled");
-
 
         if( ingredientList == null || ingredientList.size() == 0) {
             return null;
@@ -75,9 +69,6 @@ import java.util.List;
         views.setTextViewText(R.id.tv_ingredients_measure, measure);
 
         return views;
-
-
-
 
     }
 
