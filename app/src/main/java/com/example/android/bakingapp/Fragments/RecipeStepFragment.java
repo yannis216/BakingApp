@@ -91,6 +91,7 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
 
     }
 
+
     private Step findStepById(List<Step> steps, int stepId){
         for(Step step : steps){
             if(step.getId() == stepId){
@@ -210,6 +211,12 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
             }
         }
         return prevStepId;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+
+        super.onSaveInstanceState(outState);
     }
 }
 

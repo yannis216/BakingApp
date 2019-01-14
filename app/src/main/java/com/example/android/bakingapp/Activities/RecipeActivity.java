@@ -12,13 +12,14 @@ import com.example.android.bakingapp.R;
 public class RecipeActivity extends AppCompatActivity implements StepsListFragment.OnStepClickListener{
     private Boolean mTwoPane;
     FragmentManager fragmentManager;
+    public static final String STATE_STEPS = "StepsListFragment";
+    public static final String STATE_STEP = "RecipeStepFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
-        final int STATE_STEPS = 1;
-        final int STATE_STEP = 2;
+
 
         if(findViewById(R.id.dp600_recipe_layout) != null)
         {
@@ -44,22 +45,20 @@ public class RecipeActivity extends AppCompatActivity implements StepsListFragme
                     .commit();
 
         }else{
+
+            if(savedInstanceState == null) {
                 StepsListFragment stepsListFragment = new StepsListFragment();
                 fragmentManager = getSupportFragmentManager();
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.recipe_step_container, stepsListFragment)
                         .commit();
+            }
         }
 
 
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        
-        super.onSaveInstanceState(outState);
-    }
 
     public void onStepSelected(){
         if(!mTwoPane) {
