@@ -50,9 +50,18 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         TextView quantityView = holder.itemView.findViewById(R.id.tv_ingredients_quantity);
         TextView measureView = holder.itemView.findViewById(R.id.tv_ingredients_measure);
 
+        int quantity = Math.round(currentIngredient.getQuantity());
+        quantityView.setText(quantity +"");
 
-        quantityView.setText("" + currentIngredient.getQuantity());
-        measureView.setText("" + currentIngredient.getMeasure() + " ");
+        String measure;
+        if(currentIngredient.getMeasure().equals("G")){
+            measure = currentIngredient.getMeasure() +" ";
+        }else{
+            measure = " " + currentIngredient.getMeasure() + " ";
+        }
+
+        String measureString = measure.toLowerCase();
+        measureView.setText(measureString);
         ingredientView.setText(currentIngredient.getIngredient());
 
 
