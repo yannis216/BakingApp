@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.Models.Step;
@@ -62,6 +63,11 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
     public void onBindViewHolder(@NonNull StepsViewHolder holder, int position) {
         Step currentStep = steps.get(position);
         String stepShortDesc = currentStep.getShortDescription();
+
+        ImageView thumbnailView = holder.itemView.findViewById(R.id.iv_thumbnail);
+        if(currentStep.getThumbnailURL().isEmpty()){
+            thumbnailView.setImageResource();
+        }
 
         TextView nameView = holder.itemView.findViewById(R.id.tv_recipe_desc_list_item);
         nameView.setText(stepShortDesc);
