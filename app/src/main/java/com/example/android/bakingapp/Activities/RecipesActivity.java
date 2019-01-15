@@ -42,6 +42,7 @@ public class RecipesActivity extends AppCompatActivity implements RecipesAdapter
         setContentView(R.layout.activity_recipes);
         mPrefs = getSharedPreferences("mPreference", 0);
 
+
         mRvRecipeCards =(RecyclerView) findViewById(R.id.rv_recipecards);
 
         mLayoutManager = new LinearLayoutManager(this);

@@ -57,6 +57,8 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
         nextButton = rootView.findViewById(R.id.bn_next);
         prevButton = rootView.findViewById(R.id.bn_prev);
 
+
+
         nextButton.setOnClickListener(this);
         prevButton.setOnClickListener(this);
 
