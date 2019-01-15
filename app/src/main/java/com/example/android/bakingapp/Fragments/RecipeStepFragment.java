@@ -54,11 +54,11 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
         View rootView = inflater.inflate(R.layout.fragment_recipe_step, container, false);
         tvStepLongDesc = rootView.findViewById(R.id.tv_longDesc);
         playerView = rootView.findViewById(R.id.pv_Step);
+
         nextButton = rootView.findViewById(R.id.bn_next);
         prevButton = rootView.findViewById(R.id.bn_prev);
-
-
-
+        nextButton.setText(getResources().getString(R.string.next));
+        prevButton.setText(getResources().getString(R.string.prev));
         nextButton.setOnClickListener(this);
         prevButton.setOnClickListener(this);
 
@@ -211,13 +211,13 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
     }
     private void adjustPrevNextButtons(int id){
         if(findNextStepId(id)==null){
-            nextButton.setVisibility(View.GONE);
+            nextButton.setVisibility(View.INVISIBLE);
         }
         else{
             nextButton.setVisibility(View.VISIBLE);
         }
         if(findPrevStepId(id)== -1){
-            prevButton.setVisibility(View.GONE);
+            prevButton.setVisibility(View.INVISIBLE);
         }
         else{
             prevButton.setVisibility(View.VISIBLE);
