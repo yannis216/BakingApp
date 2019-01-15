@@ -116,7 +116,7 @@ public class RecipesActivity extends AppCompatActivity implements RecipesAdapter
         Gson gson = new Gson();
         String json = gson.toJson(recipe);
         prefsEditor.putString("ingredients", json);
-        prefsEditor.commit();
+        prefsEditor.apply();
     }
 
 }

@@ -86,5 +86,4 @@ public class RecipeActivity extends AppCompatActivity implements StepsListFragme
         }
 
     }
-
 }

@@ -17,6 +17,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
     private List<Recipe> recipes;
     private LayoutInflater mInflater;
     private final RecipeOnClickHandler mClickHandler;
+    Context context2;
 
     public interface RecipeOnClickHandler {
         void onClick(Recipe requestedRecipe);
@@ -24,6 +25,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
 
     public RecipesAdapter(Context context, List<Recipe> recipesList, RecipeOnClickHandler clickHandler){
         mInflater = LayoutInflater.from(context);
+        context2 = context;
         this.recipes = recipesList;
         mClickHandler = clickHandler;
     }
@@ -62,10 +64,13 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
     public void onBindViewHolder(@NonNull RecipesViewHolder holder, int position) {
         Recipe currentRecipe = recipes.get(position);
         String recipeName = currentRecipe.getName();
+        String recipeServings = context2.getResources().getString(R.string.servings)+currentRecipe.getServings();
 
         TextView nameView = holder.itemView.findViewById(R.id.tv_recipeTitle);
+        TextView servingsView = holder.itemView.findViewById(R.id.tv_recipeServings);
 
         nameView.setText(recipeName);
+        servingsView.setText(recipeServings);
 
 
     }
