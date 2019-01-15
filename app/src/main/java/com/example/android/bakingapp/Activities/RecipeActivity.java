@@ -20,16 +20,7 @@ public class RecipeActivity extends AppCompatActivity implements StepsListFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
-        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-            @Override
-            public void onBackStackChanged() {
-                shouldDisplayHomeUp();
-            }
-        });
-        //Handle when activity is recreated like on orientation Change
-        shouldDisplayHomeUp();
-
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         if(findViewById(R.id.dp600_recipe_layout) != null)
@@ -68,12 +59,6 @@ public class RecipeActivity extends AppCompatActivity implements StepsListFragme
         }
 
 
-    }
-
-    public void shouldDisplayHomeUp(){
-        //Enable Up button only  if there are entries in the back stack
-        boolean canGoBack = getSupportFragmentManager().getBackStackEntryCount()>0;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
