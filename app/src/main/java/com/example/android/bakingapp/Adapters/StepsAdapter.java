@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.android.bakingapp.Models.Step;
 import com.example.android.bakingapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
     private List<Step> steps;
     private LayoutInflater mInflater;
     private final StepOnClickHandler mClickHandler;
+    Context context;
 
     public interface StepOnClickHandler {
         void onClick(Step requestedStep);
@@ -48,7 +50,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
     @NonNull
     @Override
     public StepsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        Context context = viewGroup.getContext();
+        context = viewGroup.getContext();
         int layoutIdForListItem = R.layout.activity_recipe_desc_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean attachImmediately = false;
@@ -69,12 +71,15 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
             thumbnailView.setImageResource(R.drawable.baseline_not_interested_black_24);
         }
         else{
-            
+            Picasso.with(context)
+                    .load(currentStep.getThumbnailURL())
+                    .placeholder(R.drawable.baseline_not_interested_black_24)
+                    .error(R.drawable.baseline_not_interested_black_24)
+                    .into(thumbnailView);
         }
 
         TextView nameView = holder.itemView.findViewById(R.id.tv_recipe_desc_list_item);
         nameView.setText(stepShortDesc);
-
 
     }
 

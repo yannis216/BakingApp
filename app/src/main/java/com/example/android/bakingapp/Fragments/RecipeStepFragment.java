@@ -116,38 +116,35 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
 
     private void updateUi(int id){
         Step requestedStep = findStepById(steps, id);
-        String url = requestedStep.getVideoURL();
-        if (url != ""){
-            setupExoPlayer(url);
-        }
-        else{
-            if(player != null){
-                player.release();
-            }
-            playerView.setVisibility(View.GONE);
-        }
         tvStepLongDesc.setText(requestedStep.getDescription());
         adjustPrevNextButtons(id);
     }
 
     private void setupExoPlayer(String url){
-        playerView.setVisibility(View.VISIBLE);
-        if(player != null){
-            player.release();
-        }
-        Uri videoUri = Uri.parse(url);
-        player = ExoPlayerFactory.newSimpleInstance(getContext());
-        playerView.setPlayer(player);
+        Log.e("setupExoPlayer", ""+url);
+        if (!url.isEmpty()){
+            playerView.setVisibility(View.VISIBLE);
+            if(player != null){
+                player.release();
+            }
+            Uri videoUri = Uri.parse(url);
+            player = ExoPlayerFactory.newSimpleInstance(getContext());
+            playerView.setPlayer(player);
 
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getContext(), Util.getUserAgent(getContext(), "BakingApp"));
-        MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(videoUri);
-        player.prepare(videoSource);
-        if(mPlayerPosition != 0){
-            player.seekTo(mPlayerPosition);
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getContext(), Util.getUserAgent(getContext(), "BakingApp"));
+            MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(videoUri);
+            player.prepare(videoSource);
+            if(mPlayerPosition != 0){
+                player.seekTo(mPlayerPosition);
 
+            }
+        }else {
+            if(player != null){
+                player.release();
+            }
+            playerView.setVisibility(View.GONE);
         }
-        //TODO Handle case where media is in thumbnailurl, generally handle pictures in thumbnailurl  and put a placeholder picture
     }
 
 
