@@ -184,10 +184,28 @@ public class RecipeStepFragment extends Fragment implements View.OnClickListener
             case R.id.bn_next:
                 Integer nextStepId = findNextStepId(viewModel.getCurrentStepId().getValue());
                 updateModelWithNewId(nextStepId);
+                Step nextStep = findStepById(viewModel.getRecipe().getSteps(), nextStepId);
+                if(!nextStep.getVideoURL().isEmpty()){
+                    setupExoPlayer(nextStep.getVideoURL());
+                }else {
+                    if (player != null) {
+                        player.release();
+                    }
+                    playerView.setVisibility(View.GONE);
+                }
                 break;
             case R.id.bn_prev:
                 int prevStepId = findPrevStepId(viewModel.getCurrentStepId().getValue());
                 updateModelWithNewId(prevStepId);
+                Step prevStep = findStepById(viewModel.getRecipe().getSteps(), prevStepId);
+                if(!prevStep.getVideoURL().isEmpty()){
+                    setupExoPlayer(prevStep.getVideoURL());
+                }else {
+                    if(player != null){
+                        player.release();
+                    }
+                    playerView.setVisibility(View.GONE);
+                }
         }
 
     }
