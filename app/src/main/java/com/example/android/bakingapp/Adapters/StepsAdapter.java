@@ -66,7 +66,10 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
 
         ImageView thumbnailView = holder.itemView.findViewById(R.id.iv_thumbnail);
         if(currentStep.getThumbnailURL().isEmpty()){
-            thumbnailView.setImageResource();
+            thumbnailView.setImageResource(R.drawable.baseline_not_interested_black_24);
+        }
+        else{
+            
         }
 
         TextView nameView = holder.itemView.findViewById(R.id.tv_recipe_desc_list_item);
