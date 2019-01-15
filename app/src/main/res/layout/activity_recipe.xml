@@ -9,6 +9,5 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recipe_step_container"
-        android:layout_margin="@dimen/recipe_margins"/>
+        android:id="@+id/recipe_step_container" />
 </android.support.v4.widget.NestedScrollView>
