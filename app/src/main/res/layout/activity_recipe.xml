@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Activities.RecipeActivity"
-    android:padding="16dp">
+    android:scrollbars="none"
+    android:fillViewport="true"
+    tools:context=".Activities.RecipeActivity">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recipe_step_container"/>
-</LinearLayout>
+        android:id="@+id/recipe_step_container"
+        android:layout_margin="@dimen/recipe_margins"/>
+</android.support.v4.widget.NestedScrollView>

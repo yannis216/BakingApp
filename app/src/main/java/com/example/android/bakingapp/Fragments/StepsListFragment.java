@@ -66,6 +66,9 @@ public class StepsListFragment extends Fragment implements StepsAdapter.StepOnCl
         mRvIngredients = rootView.findViewById(R.id.rv_recipeIngredients);
         mRvSteps = rootView.findViewById(R.id.rv_recipeShortDescs);
 
+        mRvIngredients.setNestedScrollingEnabled(false);
+        mRvSteps.setNestedScrollingEnabled(false);
+
         viewModel = ViewModelProviders.of(getActivity()).get(SharedStepViewModel.class);
 
         if(viewModel.getRecipe() == null) {
